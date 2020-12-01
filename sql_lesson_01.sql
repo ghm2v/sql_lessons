@@ -77,9 +77,15 @@ FROM users_asup
 GROUP BY stat2;
 
 /* Задача 5 */
-/*
-* Думаю еще другим способом
-*/
+
+/* Способ с JOIN */
+SELECT users_asup.fullname
+FROM users_asup
+JOIN users ON users_asup.snilsid = users.snilsid
+JOIN auth ON users.id = auth.user_id
+WHERE auth.set_password_date < '2020-11-01'::date;
+
+/* Без JOIN */
 SELECT users_asup.fullname
 FROM users_asup, users, auth
 WHERE auth.user_id =  users.id AND users.snilsid = users_asup.snilsid AND auth.set_password_date < '2020-11-01'::date;
